@@ -133,7 +133,7 @@ class CloudTrailRawCatalog(BaseCatalogManager):
                     "Name": "readonly"
                 },
                 {
-                    "Type": "array<string>",
+                    "Type": "array<struct<accountid:string,type:string,arn:string,arnprefix:string>>",
                     "Name": "resources"
                 }
             ],
@@ -245,7 +245,7 @@ class CloudTrailConvertedCatalog(BaseCatalogManager):
                     "Name": "readonly"
                 },
                 {
-                    "Type": "array<struct<arn:string,accountid:string,type:string>>",
+                    "Type": "array<struct<accountid:string,type:string,arn:string,arnprefix:string>>",
                     "Name": "resources"
                 }
             ],
@@ -264,8 +264,10 @@ class CloudTrailConvertedCatalog(BaseCatalogManager):
         LOGGER.info("Performing custom conversion action: to_json")
 
         # The list of fields and mapping tuples we want to convert to a raw JSON string
-        raw_fields = ['requestParameters', 'responseElements', 'userIdentity', 'additionalEventData']
-        json_mappings = [(name, 'struct', "json_%s" % name.lower(), 'string') for name in raw_fields]
+        raw_fields = ['requestParameters', 'responseElements',
+                      'userIdentity', 'additionalEventData']
+        json_mappings = [(name, 'struct', "json_%s" %
+                          name.lower(), 'string') for name in raw_fields]
 
         # Keep the remaining fields the exact same
         static_mappings = [
@@ -274,6 +276,7 @@ class CloudTrailConvertedCatalog(BaseCatalogManager):
         ]
 
         # Apply the mapping of the combined field set
-        mapped_dyf = dynamic_frame.apply_mapping(static_mappings + json_mappings)
+        mapped_dyf = dynamic_frame.apply_mapping(
+            static_mappings + json_mappings)
 
         return mapped_dyf

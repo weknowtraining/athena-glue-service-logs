@@ -13,7 +13,7 @@
 
 """Utility methods for AthenaGlueServiceLogs module"""
 import re
-from urlparse import urlparse
+from urllib.parse import urlparse
 
 import boto3
 
