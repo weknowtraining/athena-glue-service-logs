@@ -133,7 +133,7 @@ class CloudTrailRawCatalog(BaseCatalogManager):
                     "Name": "readonly"
                 },
                 {
-                    "Type": "array<struct<accountid:string,type:string,arn:string,arnprefix:string>>",
+                    "Type": "array<struct<accountid:string,type:string,arn:string>>",
                     "Name": "resources"
                 }
             ],
@@ -245,7 +245,7 @@ class CloudTrailConvertedCatalog(BaseCatalogManager):
                     "Name": "readonly"
                 },
                 {
-                    "Type": "array<struct<accountid:string,type:string,arn:string,arnprefix:string>>",
+                    "Type": "array<struct<accountid:string,type:string,arn:string>>",
                     "Name": "resources"
                 }
             ],
